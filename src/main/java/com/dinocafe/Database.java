@@ -1,8 +1,10 @@
 package com.dinocafe;
 
+import java.sql.SQLException;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.JDBCConnectionException;
 import pojo.Employees;
 import pojo.Product;
 
@@ -48,8 +50,30 @@ public final class Database {
 
   public static synchronized void close() {
     if (factory != null) {
-      factory.close();
+      SessionFactory closing = factory;
       factory = null;
+      closing.close();
+    }
+  }
+
+  static boolean connectionFailure(Throwable failure) {
+    Throwable current = failure;
+    for (int depth = 0; current != null && depth < 16; depth++, current = current.getCause()) {
+      if (current instanceof JDBCConnectionException) return true;
+      if (current instanceof SQLException sql
+          && sql.getSQLState() != null
+          && sql.getSQLState().startsWith("08")) return true;
+    }
+    return false;
+  }
+
+  static synchronized void invalidate(SessionFactory failed, RuntimeException originalFailure) {
+    if (factory != failed) return;
+    factory = null;
+    try {
+      failed.close();
+    } catch (RuntimeException cleanupFailure) {
+      if (cleanupFailure != originalFailure) originalFailure.addSuppressed(cleanupFailure);
     }
   }
 }

@@ -56,7 +56,8 @@ public class ProductsBean implements Serializable {
     } catch (IllegalArgumentException e) {
       AuthBean.error(e.getMessage());
     } catch (RuntimeException e) {
-      AuthBean.error("Produk belum tersimpan. Muat ulang daftar dan coba lagi.");
+      AuthBean.error(
+          "Penyimpanan belum dapat dikonfirmasi; muat ulang daftar sebelum mencoba lagi.");
     }
   }
 
@@ -110,7 +111,8 @@ public class ProductsBean implements Serializable {
       cancelDelete();
       reload();
     } catch (RuntimeException e) {
-      AuthBean.error("Produk belum terhapus. Periksa database lalu coba lagi.");
+      AuthBean.error(
+          "Penghapusan belum dapat dikonfirmasi; muat ulang daftar sebelum mencoba lagi.");
     }
   }
 

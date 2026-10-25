@@ -71,7 +71,7 @@ Mojarra 2.3.21 memakai artifact `org.glassfish:jakarta.faces` tetapi API-nya mas
 ## Jika ada masalah
 
 - **Port dipakai:** ubah `APP_PORT` di `.env`, kemudian jalankan `docker compose up -d`.
-- **Database belum tersedia:** lihat status/log Docker, cocokkan konfigurasi pengguna, lalu coba ulang form atau tombol **Muat ulang**.
+- **Database belum tersedia:** lihat status/log Docker dan cocokkan konfigurasi pengguna. Koneksi yang putus dibuang agar permintaan berikutnya dapat membuka pool baru; setelah database kembali sehat, pilih **Muat ulang**. Transaksi tulis tidak dikirim ulang otomatis. Jika koneksi putus saat menyimpan, periksa daftar sebelum mengirim ulang karena hasil penyimpanan sebelumnya mungkin belum dapat dipastikan.
 - **Form kedaluwarsa / 403:** buka ulang halaman dan kirim form baru; jangan memakai form dari sesi yang telah keluar.
 - **Tidak ada hasil pencarian:** ubah kata kunci atau pilih **Tampilkan semua**.
 - **Perubahan belum tersimpan:** pesan error mempertahankan isian; perbaiki datanya atau muat ulang daftar jika produk diedit dari tab lain.
