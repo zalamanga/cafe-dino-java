@@ -4,6 +4,19 @@ Aplikasi latihan pengelolaan produk kafe dengan **Java 17, JSF/Facelets, Hiberna
 
 Ini aplikasi yang memakai database, bukan halaman login HTML yang bisa dibuka melalui Live Server. Semua akun demo memiliki hak pengelolaan produk yang sama. Tidak ada pesanan, pembayaran, laporan penjualan, atau transaksi pengurangan stok.
 
+## Tampilan aplikasi
+
+![Beranda DinoCafe dengan galeri delapan minuman dari proyek asal](docs/images/drinks-gallery-desktop.png)
+
+Tangkapan aplikasi dari pengujian 25 Oktober 2026 dengan akun, harga, dan stok contoh sintetis. Foto minuman berasal dari proyek asal. Perbaikan backend setelah pengambilan gambar tidak mengubah UI ini.
+
+<details>
+<summary>Kelola produk di layar ponsel</summary>
+
+<img src="docs/images/product-management-mobile.png" alt="Halaman kelola produk DinoCafe di layar ponsel dengan form tambah, pencarian, harga, dan stok contoh" width="320">
+
+</details>
+
 ## Jalankan dengan Docker
 
 Siapkan Docker Desktop dengan Linux containers dan Docker Compose. Dari PowerShell:
