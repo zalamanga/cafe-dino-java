@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" lang="id">
+<h:head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title><ui:insert name="title">DinoCafe</ui:insert> | DinoCafe</title>
+  <h:outputStylesheet library="css" name="style.css"/>
+  <h:outputScript library="js" name="app.js" target="body"/>
+</h:head>
+<h:body>
+  <a class="skip-link" href="#main">Lewati ke isi</a>
+  <header class="site-header">
+    <h:link outcome="#{empty sessionScope.accountId ? 'index' : 'home'}" styleClass="brand"><h:graphicImage library="images" name="Logo.png" alt="DinoCafe" width="222" height="83"/></h:link>
+    <ui:fragment rendered="#{not empty sessionScope.accountId}">
+      <nav aria-label="Navigasi utama"><h:link outcome="home" value="Beranda"/><h:link outcome="products" value="Produk"/><h:link outcome="about" value="Tentang"/></nav>
+      <div class="account"><span><h:outputText value="#{auth.name}"/></span><form method="post" action="#{request.contextPath}/logout"><input type="hidden" name="csrf" value="#{security.csrf}"/><button class="secondary" type="submit">Keluar</button></form></div>
+    </ui:fragment>
+  </header>
+  <main id="main">
+    <div class="messages" role="alert"><h:messages/></div>
+    <p id="loading" role="status" hidden="hidden">Memproses permintaan, tunggu sebentar...</p>
+    <ui:insert name="content"/>
+  </main>
+  <footer><p>DinoCafe, 2022. Proyek asal dengan atribusi SEAN.</p><p>Demo pengelolaan produk lokal. Tidak menerima pesanan atau pembayaran.</p></footer>
+</h:body>
+</html>

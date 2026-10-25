@@ -1,0 +1,23 @@
+<ui:composition template="/WEB-INF/template.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<ui:define name="title">Produk</ui:define>
+<ui:define name="content">
+  <section class="page-intro"><h1>Kelola produk</h1><p>Harga dan stok awal merupakan data contoh, bukan inventaris kedai yang terverifikasi.</p></section>
+  <section class="editor" aria-labelledby="editor-title"><h2 id="editor-title">#{products.editing ? 'Edit produk' : 'Tambah produk'}</h2>
+    <h:form id="editor"><input type="hidden" name="csrf" value="#{security.csrf}"/>
+      <div class="fields"><div><h:outputLabel for="name" value="Nama produk"/><h:inputText id="name" value="#{products.name}" required="true" maxlength="120"/></div>
+      <div><h:outputLabel for="category" value="Kategori"/><h:inputText id="category" value="#{products.category}" required="true" maxlength="60"/></div>
+      <div><h:outputLabel for="price" value="Harga (Rp)"/><h:inputText id="price" value="#{products.price}" required="true" p:type="number" p:min="0" p:max="1000000000" p:step="1"><f:validateLongRange minimum="0" maximum="1000000000"/></h:inputText></div>
+      <div><h:outputLabel for="stock" value="Stok"/><h:inputText id="stock" value="#{products.stock}" required="true" p:type="number" p:min="0" p:max="1000000" p:step="1"><f:validateLongRange minimum="0" maximum="1000000"/></h:inputText></div></div>
+      <div class="actions"><h:commandButton value="#{products.editing ? 'Simpan perubahan' : 'Tambah produk'}" action="#{products.save}"/><h:link outcome="products" value="#{products.editing ? 'Batal edit' : 'Bersihkan isian'}" styleClass="button secondary"/></div>
+    </h:form>
+  </section>
+  <ui:fragment rendered="#{not empty products.pendingId}"><section class="confirmation" aria-labelledby="delete-title"><h2 id="delete-title">Konfirmasi hapus</h2><p>Hapus <strong><h:outputText value="#{products.pendingName}"/></strong>? Data produk ini akan dihapus dari database.</p><h:form id="confirm"><input type="hidden" name="csrf" value="#{security.csrf}"/><div class="actions"><h:commandButton value="Ya, hapus produk" action="#{products.delete}" styleClass="danger"/><h:commandButton value="Batal hapus" action="#{products.cancelDelete}" styleClass="secondary"/></div></h:form></section></ui:fragment>
+  <section aria-labelledby="list-title"><h2 id="list-title">Daftar produk</h2>
+    <form method="get" action="#{request.contextPath}/products.xhtml" class="search"><label for="search">Cari nama atau kategori</label><div class="actions"><input id="search" name="q" value="#{products.query}" maxlength="120"/><button type="submit">Cari</button><h:link outcome="products" value="Tampilkan semua" styleClass="button secondary"/></div></form>
+    <ui:fragment rendered="#{products.loadError}"><h:form id="retry"><input type="hidden" name="csrf" value="#{security.csrf}"/><p role="alert">Database belum tersedia. Daftar tidak dapat ditampilkan.</p><h:commandButton value="Muat ulang" action="#{products.reload}"/></h:form></ui:fragment>
+    <ui:fragment rendered="#{not products.loadError and empty products.rows}"><p class="notice">Tidak ada produk yang cocok. Ubah pencarian atau tambahkan produk melalui form di atas.</p></ui:fragment>
+    <h:form id="rows"><input type="hidden" name="csrf" value="#{security.csrf}"/>
+      <ui:repeat value="#{products.rows}" var="item"><article class="product-row"><div><h3><h:outputText value="#{item.name}"/></h3><p><h:outputText value="#{item.category}"/> · ID <h:outputText value="#{item.id}"/></p></div><dl><div><dt>Harga</dt><dd>Rp <h:outputText value="#{item.price}"><f:convertNumber locale="id_ID" pattern="#,##0"/></h:outputText></dd></div><div><dt>Stok</dt><dd><h:outputText value="#{item.stock}"/></dd></div></dl><div class="actions"><h:commandButton value="Edit" action="#{products.edit(item.id)}" p:aria-label="Edit #{item.name}" styleClass="secondary"/><h:commandButton value="Hapus" action="#{products.askDelete(item.id)}" p:aria-label="Hapus #{item.name}" styleClass="danger secondary"/></div></article></ui:repeat>
+    </h:form>
+  </section>
+</ui:define></ui:composition>

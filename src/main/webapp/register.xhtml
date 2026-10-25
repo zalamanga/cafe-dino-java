@@ -1,0 +1,15 @@
+<ui:composition template="/WEB-INF/template.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<ui:define name="title">Buat akun</ui:define>
+<ui:define name="content">
+  <section class="auth-panel"><h1>Buat akun demo</h1>
+    <p>Gunakan data uji. Setiap akun demo dapat mengelola seluruh produk pada database ini.</p>
+    <h:form id="register"><input type="hidden" name="csrf" value="#{security.csrf}"/>
+      <h:outputLabel for="name" value="Nama"/><h:inputText id="name" value="#{registration.name}" required="true" maxlength="80" p:autocomplete="name"/>
+      <h:outputLabel for="email" value="Email"/><h:inputText id="email" value="#{registration.email}" required="true" maxlength="254" p:type="email" p:autocomplete="email"/>
+      <h:outputLabel for="password" value="Password"/><p id="password-hint">Gunakan 12 sampai 128 karakter.</p>
+      <h:inputSecret id="password" value="#{registration.password}" required="true" maxlength="128" p:autocomplete="new-password" p:aria-describedby="password-hint"><f:validateLength minimum="12" maximum="128"/></h:inputSecret>
+      <h:outputLabel for="confirmation" value="Konfirmasi password"/><h:inputSecret id="confirmation" value="#{registration.confirmation}" required="true" maxlength="128" p:autocomplete="new-password"/>
+      <h:commandButton value="Buat akun" action="#{registration.register}"/>
+    </h:form><p>Sudah punya akun? <h:link outcome="index" value="Kembali ke halaman masuk"/>.</p>
+  </section>
+</ui:define></ui:composition>

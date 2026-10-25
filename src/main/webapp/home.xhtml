@@ -1,0 +1,6 @@
+<ui:composition template="/WEB-INF/template.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:define name="title">Beranda</ui:define>
+<ui:define name="content">
+  <section class="page-intro"><h1>Minuman DinoCafe</h1><p>Galeri dari proyek asal. Untuk mengubah data harga dan stok demo, buka daftar produk.</p><h:link outcome="products" styleClass="button" value="Kelola produk"/></section>
+  <div class="gallery"><ui:repeat value="#{catalog.drinks}" var="drink"><figure><h:graphicImage library="images" name="#{drink.image}" alt="#{drink.name}" width="320" height="320"/><figcaption><h:outputText value="#{drink.name}"/></figcaption></figure></ui:repeat></div>
+</ui:define></ui:composition>
