@@ -69,6 +69,8 @@ pom.xml                     Build Maven menjadi WAR
 Dockerfile / compose.yaml   Tomcat 9 dan MySQL 8.4
 ```
 
+[Alur kode dan diagram](docs/CODE_FLOW.md) memisahkan galeri tetap, autentikasi, pengelolaan produk, dan transaksi database.
+
 Dengan JDK 17 dan Maven 3.9:
 
 ```powershell
